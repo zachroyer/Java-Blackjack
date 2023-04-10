@@ -37,6 +37,7 @@ public class BlackJackGame extends Deck {
 			System.out.println(".");
 			System.out.println(".");
 			System.out.println(".");
+			System.out.println(".");
 
 			displayDealerHand();
 			displayPlayerHand();
