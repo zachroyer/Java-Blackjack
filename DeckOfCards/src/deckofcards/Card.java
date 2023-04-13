@@ -13,11 +13,10 @@ public class Card {
 	private String face;
 	private String suit;
 	private boolean isJoker = false;
-	private boolean isFaceUp = false;
+	private boolean isFaceUp = true;
 	private boolean inDealersHand = true;
-	private boolean inPlayerHand = false;
-	private boolean outOfPlay = false;
-	//constructor
+
+	// constructor
 	public Card(String cardFace, String cardSuit) {
 		face = cardFace;
 		suit = cardSuit;
@@ -47,11 +46,17 @@ public class Card {
 	}
 
 	public boolean isDealer() {
-		return inDealersHand;
+		if (inDealersHand) {
+			return true;
+		}
+		return false;
 	}
-	
-	public boolean isPlayer() {
-		return inPlayerHand;
+
+	public void assignTo(String hand) {
+		if ("dealer".equals(hand.toLowerCase())) {
+			inDealersHand = false;
+		}
+		inDealersHand = true;
 	}
 
 	@Override

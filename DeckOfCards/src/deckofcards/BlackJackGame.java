@@ -12,59 +12,72 @@ import java.util.Scanner;
  */
 public class BlackJackGame extends Deck {
 
-	//attributes
+	// attributes
 	private int nextCard = 0;
+
+	private int playerBalance = 50;
 
 	public static void main(String[] args) {
 
 		BlackJackGame mainGame = new BlackJackGame("standard");
 
 		System.out.println(mainGame.getDeck().toString());
+
 	}
+
 	Scanner scnr = new Scanner(System.in);
 
-	//methods
+	// methods
 	public BlackJackGame(String deckType) {
 		super(deckType);
 
 		this.shuffle();
 
-		System.out.println("Press p to play the game");
+		System.out.println("Press p to play...");
 		String temp = scnr.nextLine();
 
 		if ("p".equals(temp)) {
-			System.out.println("Dealing cards .");
-			System.out.println(".");
-			System.out.println(".");
-			System.out.println(".");
-			System.out.println(".");
+			System.out.println("Place Your Bet:");
+			String bet = scnr.nextLine();
+			while (Integer.parseInt(bet) > playerBalance) {
+				System.out.println("Bet cannot be higher than your balance\n Place Your Bet:");
+				bet = scnr.nextLine();
+			}
 
-			displayDealerHand();
-			displayPlayerHand();
+			System.out.println("Dealing cards \n.\n.\n.");
+
+
+
 		}
 	}
 
-	private String displayDealerHand() {
-		String dealerHand = "";
-		for (int i = 0; i < nextCard; i++) {
-			if (i != (nextCard - 1)) {
-				if (getCard(i).isDealer() == true) {
-					dealerHand = dealerHand + (getCard(i).toString());
-				}
+	private StringBuilder displayDealerHand() {
+		StringBuilder dealerHand = new StringBuilder();
+		for (int i = 0; i <= nextCard; i++) {
+			if ((getCard(i).isDealer())) {
+				dealerHand = dealerHand.append(getCard(i).toString());
+
 			}
 		}
 		return dealerHand;
 	}
 
-	private String displayPlayerHand() {
-		String playerHand = "";
+	private StringBuilder displayPlayerHand() {
+		StringBuilder playerHand = new StringBuilder();
 		for (int i = 0; i < nextCard; i++) {
-			if (i != (nextCard - 1)) {
-				if(getCard(i).isPlayer() == true) {
-					playerHand = playerHand + (getCard(i).toString());
-				}	
+			if ((!getCard(i).isDealer())) {
+				playerHand = playerHand.append(getCard(i).toString());
+
 			}
 		}
 		return playerHand;
+	}
+
+	private String dealNextCard(String owner) {
+		this.getCard(nextCard).assignTo(owner);
+		this.getCard(nextCard).flipCard();
+		int temp = nextCard;
+		nextCard += 1;
+		return this.getCard(temp).toString();
 	}
 }
