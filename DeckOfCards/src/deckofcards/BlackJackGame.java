@@ -44,7 +44,7 @@ public class BlackJackGame extends Deck {
 				bet = scnr.nextLine();
 			}
 
-			System.out.println("Dealing cards \n.\n.\n.");
+			System.out.println("\nDealing cards \n.\n.\n.");
 
 
 
