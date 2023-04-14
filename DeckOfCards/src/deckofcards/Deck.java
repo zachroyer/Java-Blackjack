@@ -9,16 +9,16 @@ package deckofcards;
  * @author zachroyer
  */
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
-import java.util.Collections;
 
 public class Deck {
 
 	Random rand = new Random();
-	public String suits[] = {"Hearts", "Spades", "Clubs", "Diamonds"};
-	public String face[] = {"Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "King", "Queen", "Jack"};
-	private final int pinochleFaces[] = {0, 8, 9, 10, 11, 12};
-	private ArrayList<Card> deck = new ArrayList<>();
+	private String[] suits = {"Hearts", "Spades", "Clubs", "Diamonds"};
+	private String[] face = {"Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "King", "Queen", "Jack"};
+	private final int[] pinochleFaces = {0, 8, 9, 10, 11, 12};
+	private ArrayList<Card> cardDeck = new ArrayList<>();
 
 	/**
 	 *
@@ -38,22 +38,22 @@ public class Deck {
 		}
 	}
 
-	public ArrayList<Card> getDeck() {
-		return this.deck;
+	public List<Card> getDeck() {
+		return this.cardDeck;
 	}
 
 	public Card getCard(int index) {
-		return this.deck.get(index);
+		return this.cardDeck.get(index);
 	}
 
 	private void standardDeck() {
 		for (String face1 : face) {
 			if (!"Joker".equals(face1)) {
 				for (int p = 0; p <= 3; p++) {
-					deck.add(new Card(face1, suits[p]));
+					cardDeck.add(new Card(face1, suits[p]));
 				}
 			} else {
-				deck.add(new Card(face1));
+				cardDeck.add(new Card(face1));
 			}
 		}
 	}
@@ -61,8 +61,8 @@ public class Deck {
 	private void pinochleDeck() {
 		for (int pin : pinochleFaces) {
 			for (int p = 0; p <= 3; p++) {
-				deck.add(new Card(face[pin], suits[p]));
-				deck.add(new Card(face[pin], suits[p]));
+				cardDeck.add(new Card(face[pin], suits[p]));
+				cardDeck.add(new Card(face[pin], suits[p]));
 			}
 		}
 	}
@@ -71,12 +71,12 @@ public class Deck {
 		for (String face1 : face) {
 			if (!"Joker".equals(face1)) {
 				for (int p = 0; p <= 3; p++) {
-					deck.add(new Card(face1, suits[p]));
-					deck.add(new Card(face1, suits[p]));
+					cardDeck.add(new Card(face1, suits[p]));
+					cardDeck.add(new Card(face1, suits[p]));
 				}
 			} else {
 				for (int i = 0; i <= 3; i++) {
-					deck.add(new Card(face1));
+					cardDeck.add(new Card(face1));
 				}
 			}
 		}
@@ -84,18 +84,17 @@ public class Deck {
 
 	@Override
 	public String toString() {
-		//return cards in deck
 		String deckToString = "";
-		for (Card i : deck) {
+		for (Card i : cardDeck) {
 			for (int l = 0; l > 3; l++) {
-				if (i != deck.get(deck.size() - 1)) {
+				if (i != cardDeck.get(cardDeck.size() - 1)) {
 					deckToString = deckToString.concat(" " + i.toString() + ",");
 				} else {
 
 					deckToString = deckToString.concat(" " + i.toString());
 				}
 
-					deckToString = deckToString.concat("\r");
+					deckToString = deckToString.concat("\n");
 			}
 
 		}
@@ -112,11 +111,11 @@ public class Deck {
 	}
 
 	public void shuffle() {
-		for (Card i : this.deck) {
-			int randomIndex = rand.nextInt(deck.size());
-			Card temp = deck.get(randomIndex);
-			deck.set(randomIndex, (i));
-			deck.set(deck.indexOf(i), temp);
+		for (Card i : this.cardDeck) {
+			int randomIndex = rand.nextInt(cardDeck.size());
+			Card temp = cardDeck.get(randomIndex);
+			cardDeck.set(randomIndex, (i));
+			cardDeck.set(cardDeck.indexOf(i), temp);
 		}
 
 	}

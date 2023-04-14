@@ -9,7 +9,6 @@ import java.util.Scanner;
  *
  * @author zachroyer
  */
-import java.util.ArrayList;
 
 public class Hand extends Deck {
 	// ATTRIBUTES
@@ -21,10 +20,10 @@ public class Hand extends Deck {
 
 	// METHODS
 
-	public Hand (String deckType) {	
+	public Hand (String deckType, int balance) {	
 		super(deckType);
 		nextCard = 0;	
-
+		playerBalance = balance;
 
 		this.shuffle();
 
@@ -79,4 +78,4 @@ public class Hand extends Deck {
 	}
 }
 
-}
+

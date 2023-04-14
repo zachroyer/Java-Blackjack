@@ -4,8 +4,6 @@
  */
 package deckofcards;
 
-import java.util.Scanner;
-
 /**
  *
  * @author zachroyer
@@ -14,17 +12,16 @@ public class BlackJackGame extends Hand {
 
 	// attributes
 
-	public BlackJackGame(String deckType, int balance) {
-		super(deckType);
-		balance = 50;
+	public static void main(String[] args) {
+
+		BlackJackGame mainGame = new BlackJackGame("standard", 50);
+
+		System.out.println(mainGame.getDeck().toString());
 
 	}
 
-	public static void main(String[] args) {
-
-		BlackJackGame mainGame = new BlackJackGame("standard");
-
-		System.out.println(mainGame.getDeck().toString());
+	public BlackJackGame(String deckType, int balance) {
+		super(deckType, balance);
 
 	}
 }

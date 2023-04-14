@@ -4,7 +4,6 @@
  */
 package deckofcards;
 
-import java.util.Collections;
 
 /**
  *
