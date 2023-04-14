@@ -5,6 +5,7 @@
 package deckofcards;
 
 import java.util.Scanner;
+
 /**
  *
  * @author zachroyer
@@ -14,17 +15,17 @@ public class Hand extends Deck {
 	// ATTRIBUTES
 
 	int nextCard;
-	private int playerBalance;  //make a setter for the balance 
-
+	private int playerBalance;
 	Scanner scnr = new Scanner(System.in);
 
 	// METHODS
 
-	public Hand (String deckType, int balance) {	
+	public Hand(String deckType, int balance) {
 		super(deckType);
-		nextCard = 0;	
+		nextCard = 0;
 		playerBalance = balance;
 
+		this.shuffle();
 		this.shuffle();
 
 		System.out.println("Press p to play...");
@@ -40,14 +41,21 @@ public class Hand extends Deck {
 
 			System.out.println("\nDealing cards \n.\n.\n.");
 
+			// dealNextCard("dealer", true);
+			dealNextCard("player", true);
 
+			// dealNextCard("dealer", false);
+			dealNextCard("player", true);
 
+			System.out.println(displayDealerHand());
+			System.out.println(displayPlayerHand());
 
-	}}
+		}
+	}
 
-	//Push Method
+	// Push Method
 
-	private StringBuilder displayDealerHand() {
+	private String displayDealerHand() {
 		StringBuilder dealerHand = new StringBuilder();
 		for (int i = 0; i <= nextCard; i++) {
 			if ((getCard(i).isDealer())) {
@@ -55,27 +63,29 @@ public class Hand extends Deck {
 
 			}
 		}
-		return dealerHand;
+		return "Dealer's Hand: " + dealerHand;
 	}
 
-	private StringBuilder displayPlayerHand() {
+	private String displayPlayerHand() {
 		StringBuilder playerHand = new StringBuilder();
 		for (int i = 0; i < nextCard; i++) {
-			if ((!getCard(i).isDealer())) {
+			if (!(getCard(i).isDealer())) {
 				playerHand = playerHand.append(getCard(i).toString());
 
 			}
 		}
-		return playerHand;
+		return "Player's Hand: " + playerHand;
 	}
 
-	private String dealNextCard(String owner) {
+	private String dealNextCard(String owner, boolean faceUp) {
 		this.getCard(nextCard).assignTo(owner);
-		this.getCard(nextCard).flipCard();
+		if (faceUp &&  (!this.getCard(nextCard).isUp())) {
+				this.getCard(nextCard).flipCard();
+			
+		}
 		int temp = nextCard;
+		System.out.println(nextCard);
 		nextCard += 1;
 		return this.getCard(temp).toString();
 	}
 }
-
-

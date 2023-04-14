@@ -13,7 +13,7 @@ public class Card {
 	private String face;
 	private String suit;
 	private boolean isJoker = false;
-	private boolean isFaceUp = true;
+	private boolean isFaceUp = false;
 	private boolean inDealersHand = true;
 
 	// constructor
@@ -28,7 +28,7 @@ public class Card {
 	}
 
 	public void flipCard() {
-		this.isFaceUp ^= this.isFaceUp;
+		this.isFaceUp = !this.isFaceUp;
 
 	}
 
@@ -38,6 +38,10 @@ public class Card {
 		} else {
 			return null;
 		}
+	}
+
+	public boolean isUp() {
+		return isFaceUp;
 	}
 
 	public String getSuit() {
@@ -53,14 +57,14 @@ public class Card {
 
 	public void assignTo(String hand) {
 		if ("dealer".equalsIgnoreCase(hand)) {
-			inDealersHand = false;
+			inDealersHand = true;
 		}
-		inDealersHand = true;
+		inDealersHand = false;
 	}
 
 	@Override
 	public String toString() {
-		if (isFaceUp) {
+		if (isFaceUp == true) {
 			if (!isJoker) {
 				return face + " of " + suit;
 			} else {
