@@ -16,7 +16,7 @@ public class BlackJackGame extends Hand {
 
 		BlackJackGame mainGame = new BlackJackGame("standard", 50);
 
-		System.out.println(mainGame.getDeck().toString());
+		// System.out.println(mainGame.getDeck().toString());
 
 	}
 

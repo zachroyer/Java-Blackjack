@@ -33,12 +33,11 @@ public class Card {
 	}
 
 	public String getFaceValue() {
-		if (isFaceUp == true) {
+		if (isFaceUp) {
 			return face;
-		} else if (isFaceUp == false) {
+		} else {
 			return null;
 		}
-		return null;
 	}
 
 	public String getSuit() {
@@ -53,7 +52,7 @@ public class Card {
 	}
 
 	public void assignTo(String hand) {
-		if ("dealer".equals(hand.toLowerCase())) {
+		if ("dealer".equalsIgnoreCase(hand)) {
 			inDealersHand = false;
 		}
 		inDealersHand = true;
@@ -61,8 +60,8 @@ public class Card {
 
 	@Override
 	public String toString() {
-		if (isFaceUp == true) {
-			if (isJoker == false) {
+		if (isFaceUp) {
+			if (!isJoker) {
 				return face + " of " + suit;
 			} else {
 				return face;
