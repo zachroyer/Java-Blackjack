@@ -9,15 +9,32 @@ package deckofcards;
  * @author zachroyer
  */
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
 public class Deck {
 
 	Random rand = new Random();
-	private String[] suits = {"Hearts", "Spades", "Clubs", "Diamonds"};
-	private String[] face = {"Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "King", "Queen", "Jack"};
-	private final int[] pinochleFaces = {0, 8, 9, 10, 11, 12};
+
+	HashMap<String, Integer> cardValues = new HashMap<>();
+	private String[] suits = { "Hearts", "Spades", "Clubs", "Diamonds" };
+	private String[] face = { "Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "King", "Queen", "Jack" }; 
+
+	for(String i:face) {
+		int value;
+		if (i.equals("Ace")) {
+			value = 1;
+		} else if (i.equals("King") || i.equals("Queen") || i.equals("Jack")) {
+			value = 10;
+		} else {
+			value = Integer.parseInt(i);
+		}
+
+		cardValues.put(i, value);
+	}
+
+	private final int[] pinochleFaces = { 0, 8, 9, 10, 11, 12 };
 	private ArrayList<Card> cardDeck = new ArrayList<>();
 
 	/**
@@ -94,20 +111,20 @@ public class Deck {
 					deckToString = deckToString.concat(" " + i.toString());
 				}
 
-					deckToString = deckToString.concat("\n");
+				deckToString = deckToString.concat("\n");
 			}
 
 		}
 		return deckToString;
-//	}
-//
-//	public void removeJokers() {
-//		for (Card i : deck) {
-//			if (i.getFaceValue() == "Joker") {
-//
-//				deck.remove(i);
-//			}
-//		}
+		// }
+		//
+		// public void removeJokers() {
+		// for (Card i : deck) {
+		// if (i.getFaceValue() == "Joker") {
+		//
+		// deck.remove(i);
+		// }
+		// }
 	}
 
 	public void shuffle() {
