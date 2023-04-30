@@ -19,9 +19,21 @@ public class Deck {
 
 	HashMap<String, Integer> cardValues = new HashMap<>();
 	private String[] suits = { "Hearts", "Spades", "Clubs", "Diamonds" };
-	private String[] face = { "Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "King", "Queen", "Jack" }; 
+	private String[] face = { "Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "King", "Queen", "Jack" };
 
-	for(String i:face) {
+
+	private final int[] pinochleFaces = { 0, 8, 9, 10, 11, 12 };
+	private ArrayList<Card> cardDeck = new ArrayList<>();
+
+	/**
+	 *
+	 * @param deckType
+	 */
+	public Deck(String deckType) {
+
+	for(
+	String i:face)
+	{
 		int value;
 		if (i.equals("Ace")) {
 			value = 1;
@@ -34,14 +46,6 @@ public class Deck {
 		cardValues.put(i, value);
 	}
 
-	private final int[] pinochleFaces = { 0, 8, 9, 10, 11, 12 };
-	private ArrayList<Card> cardDeck = new ArrayList<>();
-
-	/**
-	 *
-	 * @param deckType
-	 */
-	public Deck(String deckType) {
 		if (deckType.equalsIgnoreCase("Standard")) {
 			standardDeck();
 		}

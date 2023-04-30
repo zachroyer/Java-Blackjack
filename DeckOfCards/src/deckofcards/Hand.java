@@ -41,11 +41,9 @@ public class Hand extends Deck {
 
 			System.out.println("\nDealing cards \n.\n.\n.");
 
-			// dealNextCard("dealer", true);
 			dealNextCard("player", true);
 
-			// dealNextCard("dealer", false);
-			dealNextCard("player", true);
+			dealNextCard("player", false);
 
 			System.out.println(displayDealerHand());
 			System.out.println(displayPlayerHand());
@@ -57,7 +55,7 @@ public class Hand extends Deck {
 
 	private String displayDealerHand() {
 		StringBuilder dealerHand = new StringBuilder();
-		for (int i = 0; i <= nextCard; i++) {
+		for (int i = 0; i < nextCard; i++) {
 			if ((getCard(i).isDealer())) {
 				dealerHand = dealerHand.append(getCard(i).toString());
 
@@ -79,10 +77,10 @@ public class Hand extends Deck {
 
 	private String dealNextCard(String owner, boolean faceUp) {
 		this.getCard(nextCard).assignTo(owner);
-		if (faceUp &&  (!this.getCard(nextCard).isUp())) {
-				this.getCard(nextCard).flipCard();
-			
+		if (faceUp && (!this.getCard(nextCard).isUp())) {
+			this.getCard(nextCard).flipCard();
 		}
+
 		int temp = nextCard;
 		System.out.println(nextCard);
 		nextCard += 1;
