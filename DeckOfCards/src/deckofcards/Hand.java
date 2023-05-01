@@ -23,22 +23,33 @@ public class Hand extends Deck {
 	public Hand(String deckType, int balance) {
 		super(deckType);
 		nextCard = 0;
+		player = new 
 		playerBalance = balance;
 
 		this.shuffle();
 		this.shuffle();
 
+		System.out.println("Your Balance is : $" + playerBalance);
+		if (playerBalance > balance) {
+			System.out.println("Would you like to Cash Out? \n Yes or No?");
+			String cashout = scnr.nextLine();
+			if ("yes".equalsIgnoreCase(cashout)) {
+				System.out.println("You won $" + playerBalance + "! Thanks for playing!");
+				System.exit(0);
+			}
+		}
 		System.out.println("Press p to play...");
 
 		awaitPlayerInput();
+
+
 
 	}
 
 	// Recursive method for calling methods to play the game
 	// Very proud of this one
-	private void awaitPlayerInput() {
+	private boolean awaitPlayerInput() {
 		String input = scnr.nextLine().toLowerCase();
-		boolean stay = false;
 		switch (input) {
 			case "p":
 				System.out.println("Place Your Bet:");
@@ -61,21 +72,23 @@ public class Hand extends Deck {
 				System.out.println(displayPlayerHand());
 				System.out.println("Player's hand is worth: " + getHandValue("player") + "\n");
 
-				while (getHandValue("player") < 21 && (!stay)) {
+				while (getHandValue("player") < 21) {
 					System.out.println("Press 'h' to hit, or 's' to stay: ");
-					awaitPlayerInput();
+					boolean stay = awaitPlayerInput();
+					if (stay) {
+						break;
+					}
 				}
-				break;
+
+				return true;
 			case "h":
 				hit();
-				break;
+				return false;
 
 			case "s":
-				stay = true;
-				break;
+				return true;
 			default:
-				break;
-
+				return awaitPlayerInput();
 		}
 
 	}
@@ -86,6 +99,9 @@ public class Hand extends Deck {
 			dealNextCard("player", true);
 			System.out.println(displayPlayerHand());
 			System.out.println("Player's hand is worth: " + getHandValue("player") + "\n");
+			if (getHandValue("player") > 21) {
+				player.subtracFromBalance(bet);
+			}
 		}
 	}
 
