@@ -29,35 +29,60 @@ public class Hand extends Deck {
 		this.shuffle();
 
 		System.out.println("Press p to play...");
-		String temp = scnr.nextLine();
 
-		if ("p".equals(temp)) {
-			System.out.println("Place Your Bet:");
-			String bet = scnr.nextLine();
-			while (Integer.parseInt(bet) > playerBalance) {
-				System.out.println("Bet cannot be higher than your balance\n Place Your Bet:");
-				bet = scnr.nextLine();
-			}
+		awaitPlayerInput();
 
-			System.out.println("\nDealing cards \n.\n.\n.");
-
-			dealNextCard("player", true);
-			dealNextCard("dealer", true);
-			dealNextCard("player", true);
-			dealNextCard("dealer", false);
-
-			System.out.println(displayDealerHand());
-			System.out.println("Dealer's hand is worth: " + getHandValue("dealer") + "\n");
-
-			System.out.println(displayPlayerHand());
-			System.out.println("Player's hand is worth: " + getHandValue("player") + "\n");
-
-		}
 	}
 
-	// Push Method
+	// Recursive method for calling methods to play the game
+	// Very proud of this one
+	private void awaitPlayerInput() {
+		String input = scnr.nextLine().toLowerCase();
+
+		switch (input) {
+			case "p":
+				System.out.println("Place Your Bet:");
+				String bet = scnr.nextLine();
+				while (Integer.parseInt(bet) > playerBalance) {
+					System.out.println("Bet cannot be higher than your balance\n Place Your Bet:");
+					bet = scnr.nextLine();
+				}
+
+				System.out.println("\nDealing cards \n.\n.\n.");
+
+				dealNextCard("player", true);
+				dealNextCard("dealer", true);
+				dealNextCard("player", true);
+				dealNextCard("dealer", false);
+
+				System.out.println(displayDealerHand());
+				System.out.println("Dealer's hand is worth: " + getHandValue("dealer") + "\n");
+
+				System.out.println(displayPlayerHand());
+				System.out.println("Player's hand is worth: " + getHandValue("player") + "\n");
+
+				System.out.println("Press 'h' to hit, or 's' to stay: ");
+				awaitPlayerInput();
+				break;
+			case "h":
+				hit();
+				break;
+
+			case "s":
+				break;
+			default:
+				break;
+
+		}
+
+	}
 
 	// Hit Method
+	private void hit() {
+		dealNextCard("player", true);
+		System.out.println(displayPlayerHand());
+		System.out.println("Player's hand is worth: " + getHandValue("player") + "\n");
+	}
 
 	private String displayDealerHand() {
 		StringBuilder dealerHand = new StringBuilder();
