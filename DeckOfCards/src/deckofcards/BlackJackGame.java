@@ -15,9 +15,6 @@ public class BlackJackGame extends Hand {
 	public static void main(String[] args) {
 
 		BlackJackGame mainGame = new BlackJackGame("standard", 50);
-
-		// System.out.println(mainGame.getDeck().toString());
-
 	}
 
 	public BlackJackGame(String deckType, int balance) {
@@ -26,3 +23,4 @@ public class BlackJackGame extends Hand {
 	}
 }
 
+Integer.parseInt(bet)
