@@ -38,15 +38,17 @@ public class Hand extends Deck {
 				System.exit(0);
 			}
 		}
-		System.out.println("Press p to play...");
 
-		awaitPlayerInput();
-
+		int choice;
+		do {
+			System.out.println("Press p to play...");
+			choice = awaitPlayerInput();
+		} while (choice == 0);
 	}
 
 	// Recursive method for calling methods to play the game
 	// Very proud of this one
-	private boolean awaitPlayerInput() {
+	private int awaitPlayerInput() {
 		String input = scnr.nextLine().toLowerCase();
 		switch (input) {
 			case "p":
@@ -59,10 +61,11 @@ public class Hand extends Deck {
 
 				System.out.println("\nDealing cards \n.\n.\n.");
 
-				dealNextCard("player", true);
-				dealNextCard("dealer", true);
-				dealNextCard("player", true);
-				dealNextCard("dealer", false);
+				dealNextCard("player", true).toString();
+				dealNextCard("dealer", true).toString();
+				dealNextCard("player", true).toString();
+				Card dealerFacedown = dealNextCard("dealer", false);
+				dealerFacedown.toString();
 
 				System.out.println(displayDealerHand());
 				System.out.println("Dealer's hand is worth: " + getHandValue("dealer") + "\n");
@@ -77,19 +80,27 @@ public class Hand extends Deck {
 				}
 				while (getHandValue("player") < 21) {
 					System.out.println("Press 'h' to hit, or 's' to stay: ");
-					boolean stay = awaitPlayerInput();
-					if (stay) {
+					int stay = awaitPlayerInput();
+					if (stay == 1) {
 						break;
 					}
 				}
 
-				return true;
+				dealerFacedown.flipCard();
+
+				while (getHandValue("dealer") < 17) {
+					dealNextCard("dealer", false);
+					displayDealerHand();
+
+				}
+
+				return 0;
 			case "h":
 				hit();
-				return false;
+				return 0;
 
 			case "s":
-				return true;
+				return 1;
 			default:
 				return awaitPlayerInput();
 		}
@@ -135,15 +146,15 @@ public class Hand extends Deck {
 		return "Player's Hand: " + playerHand;
 	}
 
-	private String dealNextCard(String owner, boolean faceUp) {
+	private Card dealNextCard(String owner, boolean faceUp) {
 		this.getCard(nextCard).assignTo(owner);
 		if (faceUp && (!this.getCard(nextCard).isUp())) {
 			this.getCard(nextCard).flipCard();
 		}
-
 		int temp = nextCard;
 		nextCard += 1;
-		return this.getCard(temp).toString();
+
+		return this.getCard(temp);
 	}
 
 	public int getHandValue(String owner) {

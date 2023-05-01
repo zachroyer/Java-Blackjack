@@ -31,8 +31,7 @@ public class Deck {
 	 */
 	public Deck(String deckType) {
 
-	for(
-	String i:face)
+	for(String i:face)
 	{
 		int value;
 		if (i.equals("Ace")) {

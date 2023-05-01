@@ -22,5 +22,3 @@ public class BlackJackGame extends Hand {
 
 	}
 }
-
-Integer.parseInt(bet)
