@@ -14,18 +14,21 @@ import java.util.Scanner;
 public class Hand extends Deck {
 	// ATTRIBUTES
 
-	int nextCard;
+	private int nextCard;
+	private int lastCardIndex;
 	private Player player;
 	int bet;
 	Scanner scnr = new Scanner(System.in);
 
 	// METHODS
 
-	public Hand(String deckType, int balance) {
-		super(deckType);
-		nextCard = 0;
+	public Hand(Deck deckType, int balance, int lastCard) {
+		super(deckType.getDeckType());
+		nextCard = lastCardIndex;
+		lastCardIndex = lastCard;
 		player = new Player(balance);
-
+		System.out.println(lastCardIndex);
+		System.out.println(lastCard);
 		this.shuffle();
 		this.shuffle();
 
@@ -43,7 +46,11 @@ public class Hand extends Deck {
 		do {
 			System.out.println("Press p to play...");
 			choice = awaitPlayerInput();
-		} while (choice == 0);
+		} while (choice != 0 && choice != 2);
+	}
+
+	public int getNextCard() {
+		return this.nextCard;
 	}
 
 	// Recursive method for calling methods to play the game
@@ -81,7 +88,7 @@ public class Hand extends Deck {
 				while (getHandValue("player") < 21) {
 					System.out.println("Press 'h' to hit, or 's' to stay: ");
 					int stay = awaitPlayerInput();
-					if (stay == 1) {
+					if (stay == 2) {
 						break;
 					}
 				}
@@ -100,7 +107,7 @@ public class Hand extends Deck {
 				return 0;
 
 			case "s":
-				return 1;
+				return 2;
 			default:
 				return awaitPlayerInput();
 		}
@@ -126,7 +133,7 @@ public class Hand extends Deck {
 	private String displayDealerHand() {
 		StringBuilder dealerHand = new StringBuilder();
 		dealerHand.append("\n");
-		for (int i = 0; i < nextCard; i++) {
+		for (int i = lastCardIndex; i < nextCard; i++) {
 			if ((getCard(i).isDealer())) {
 				dealerHand.append(getCard(i).toString() + "\n");
 			}
@@ -137,9 +144,9 @@ public class Hand extends Deck {
 	private String displayPlayerHand() {
 		StringBuilder playerHand = new StringBuilder();
 		playerHand.append("\n");
-		for (int i = 0; i < nextCard; i++) {
+		for (int i = lastCardIndex; i < nextCard; i++) {
 			if (!(getCard(i).isDealer())) {
-				playerHand = playerHand.append(getCard(i).toString() + "\n");
+				playerHand.append(getCard(i).toString() + "\n");
 
 			}
 		}
@@ -162,7 +169,7 @@ public class Hand extends Deck {
 		int numAces = 0;
 
 		if ("player".equalsIgnoreCase(owner)) {
-			for (int i = 0; i < nextCard; i++) {
+			for (int i = lastCardIndex; i < nextCard; i++) {
 				if (!(getCard(i).isDealer())) {
 					int cardValue = getCard(i).getValue();
 					if (cardValue == 11) {
@@ -173,7 +180,7 @@ public class Hand extends Deck {
 			}
 		} else if ("dealer".equalsIgnoreCase(owner)) {
 
-			for (int i = 0; i < nextCard; i++) {
+			for (int i = lastCardIndex; i < nextCard; i++) {
 				if ((getCard(i).isDealer())) {
 					int cardValue = getCard(i).getValue();
 					if (cardValue == 11) {
@@ -190,5 +197,9 @@ public class Hand extends Deck {
 		}
 		return value;
 
+	}
+
+	public Player getPlayer() {
+		return this.player;
 	}
 }

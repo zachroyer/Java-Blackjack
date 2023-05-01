@@ -25,12 +25,14 @@ public class Deck {
 	private final int[] pinochleFaces = { 0, 8, 9, 10, 11, 12 };
 	private ArrayList<Card> cardDeck = new ArrayList<>();
 
+	private String deckType;
+
 	/**
 	 *
 	 * @param deckType
 	 */
 	public Deck(String deckType) {
-
+		this.deckType = deckType;
 	for(String i:face)
 	{
 		int value;
@@ -47,6 +49,7 @@ public class Deck {
 
 		if (deckType.equalsIgnoreCase("Standard")) {
 			standardDeck();
+
 		}
 
 		if (deckType.equalsIgnoreCase("Pinochle")) {
@@ -60,6 +63,10 @@ public class Deck {
 
 	public List<Card> getDeck() {
 		return this.cardDeck;
+	}
+
+	public String getDeckType() {
+		return this.deckType;
 	}
 
 	public Card getCard(int index) {
