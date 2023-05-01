@@ -38,7 +38,7 @@ public class Hand extends Deck {
 	// Very proud of this one
 	private void awaitPlayerInput() {
 		String input = scnr.nextLine().toLowerCase();
-
+		boolean stay = false;
 		switch (input) {
 			case "p":
 				System.out.println("Place Your Bet:");
@@ -61,14 +61,17 @@ public class Hand extends Deck {
 				System.out.println(displayPlayerHand());
 				System.out.println("Player's hand is worth: " + getHandValue("player") + "\n");
 
-				System.out.println("Press 'h' to hit, or 's' to stay: ");
-				awaitPlayerInput();
+				while (getHandValue("player") < 21 && (!stay)) {
+					System.out.println("Press 'h' to hit, or 's' to stay: ");
+					awaitPlayerInput();
+				}
 				break;
 			case "h":
 				hit();
 				break;
 
 			case "s":
+				stay = true;
 				break;
 			default:
 				break;
@@ -79,9 +82,11 @@ public class Hand extends Deck {
 
 	// Hit Method
 	private void hit() {
-		dealNextCard("player", true);
-		System.out.println(displayPlayerHand());
-		System.out.println("Player's hand is worth: " + getHandValue("player") + "\n");
+		if (getHandValue("player") != 21) {
+			dealNextCard("player", true);
+			System.out.println(displayPlayerHand());
+			System.out.println("Player's hand is worth: " + getHandValue("player") + "\n");
+		}
 	}
 
 	private String displayDealerHand() {
