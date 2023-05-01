@@ -15,7 +15,8 @@ public class Hand extends Deck {
 	// ATTRIBUTES
 
 	int nextCard;
-	private int playerBalance;
+	private Player player;
+	int bet;
 	Scanner scnr = new Scanner(System.in);
 
 	// METHODS
@@ -23,26 +24,23 @@ public class Hand extends Deck {
 	public Hand(String deckType, int balance) {
 		super(deckType);
 		nextCard = 0;
-		player = new 
-		playerBalance = balance;
+		player = new Player(balance);
 
 		this.shuffle();
 		this.shuffle();
 
-		System.out.println("Your Balance is : $" + playerBalance);
-		if (playerBalance > balance) {
+		System.out.println("Your Balance is : $" + player.getBalance());
+		if (player.getBalance() > balance) {
 			System.out.println("Would you like to Cash Out? \n Yes or No?");
 			String cashout = scnr.nextLine();
 			if ("yes".equalsIgnoreCase(cashout)) {
-				System.out.println("You won $" + playerBalance + "! Thanks for playing!");
+				System.out.println("You won $" + player.getBalance() + "! Thanks for playing!");
 				System.exit(0);
 			}
 		}
 		System.out.println("Press p to play...");
 
 		awaitPlayerInput();
-
-
 
 	}
 
@@ -53,10 +51,10 @@ public class Hand extends Deck {
 		switch (input) {
 			case "p":
 				System.out.println("Place Your Bet:");
-				String bet = scnr.nextLine();
-				while (Integer.parseInt(bet) > playerBalance) {
+				bet = scnr.nextInt();
+				while (bet > player.getBalance()) {
 					System.out.println("Bet cannot be higher than your balance\n Place Your Bet:");
-					bet = scnr.nextLine();
+					bet = scnr.nextInt();
 				}
 
 				System.out.println("\nDealing cards \n.\n.\n.");
@@ -72,6 +70,11 @@ public class Hand extends Deck {
 				System.out.println(displayPlayerHand());
 				System.out.println("Player's hand is worth: " + getHandValue("player") + "\n");
 
+				if (getHandValue("player") == 21) {
+					player.updateToBalance(bet * 2);
+					System.out.println("You won the round! You win $" + bet + "!");
+
+				}
 				while (getHandValue("player") < 21) {
 					System.out.println("Press 'h' to hit, or 's' to stay: ");
 					boolean stay = awaitPlayerInput();
@@ -100,8 +103,12 @@ public class Hand extends Deck {
 			System.out.println(displayPlayerHand());
 			System.out.println("Player's hand is worth: " + getHandValue("player") + "\n");
 			if (getHandValue("player") > 21) {
-				player.subtracFromBalance(bet);
+				player.updateToBalance(bet * -1);
+				System.out.println("You bust! You lose $" + bet + "!");
 			}
+		} else {
+			player.updateToBalance(bet * 2);
+			System.out.println("You won the round! You win $" + bet + "!");
 		}
 	}
 
